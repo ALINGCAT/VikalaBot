@@ -8,7 +8,7 @@ using OneBot.FrameworkDemo.Models;
 using Sora.Entities;
 using Sora.EventArgs.SoraEvent;
 
-namespace OneBot.FrameworkDemo.Modules
+namespace VikalaBot.Modules
 {
     /// <summary>
     /// 这个是示例处理代码，所有的 OneBot 处理对象均需实现 IOneBotController 接口

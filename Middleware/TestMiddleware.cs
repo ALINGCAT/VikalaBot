@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using OneBot.CommandRoute.Models;
 using OneBot.CommandRoute.Services;
 
-namespace OneBot.FrameworkDemo.Middleware;
+namespace VikalaBot.Middleware;
 
 public class TestMiddleware: IOneBotMiddleware
 {
