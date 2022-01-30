@@ -21,6 +21,12 @@ namespace VikalaBot.Modules
 
         public GBFModule(ICommandService commandService, ILogger<GBFModule> logger)
         {
+            commandService.Event.OnGroupRequest += (context) =>
+            {
+                var args = context.WrapSoraEventArgs<AddGroupRequestEventArgs>();
+                args.Accept();
+                return 1;
+            };
             // 全局异常处理事件
             commandService.Event.OnException += (context, exception) =>
             {
@@ -30,29 +36,29 @@ namespace VikalaBot.Modules
             _logger = logger;
         }
 
-        [Command("crystal <count>", Alias = new[] { "!宝晶石 <count>", "!bjs <count>" }, EventType = EventType.PM)]
-        public void SetCrystal(int count, PrivateMessageEventArgs e, VikalaDbContext db)
+        [Command("crystal <count>", Alias = new[] { "!宝晶石 <count>", "!bjs <count>" }, EventType = EventType.GM)]
+        public void SetCrystal(int count, GroupMessageEventArgs e, VikalaDbContext db)
         {
             if (SetDrawInfo(db, e.Sender.Id, DrawInfoType.Crystal, count))
                 e.Reply(SoraSegment.At(e.Sender.Id) + "宝晶石记录成功!");
         }
 
-        [Command("crystal <count>", Alias = new[] { "!单抽 <count>", "!单抽券 <count>", "!单抽卷 <count>" }, EventType = EventType.PM)]
-        public void SetDraw(int count, PrivateMessageEventArgs e, VikalaDbContext db)
+        [Command("crystal <count>", Alias = new[] { "!单抽 <count>", "!单抽券 <count>", "!单抽卷 <count>" }, EventType = EventType.GM)]
+        public void SetDraw(int count, GroupMessageEventArgs e, VikalaDbContext db)
         {
             if (SetDrawInfo(db, e.Sender.Id, DrawInfoType.Draw, count))
                 e.Reply(SoraSegment.At(e.Sender.Id) + "单抽券记录成功!");
         }
 
-        [Command("crystal <count>", Alias = new[] { "!十连券 <count>", "!十连卷 <count>", "!十连 <count>" }, EventType = EventType.PM)]
-        public void SetDrawTen(int count, PrivateMessageEventArgs e, VikalaDbContext db)
+        [Command("crystal <count>", Alias = new[] { "!十连券 <count>", "!十连卷 <count>", "!十连 <count>" }, EventType = EventType.GM)]
+        public void SetDrawTen(int count, GroupMessageEventArgs e, VikalaDbContext db)
         {
             if (SetDrawInfo(db, e.Sender.Id, DrawInfoType.DrawTen, count))
                 e.Reply(SoraSegment.At(e.Sender.Id) + "十连券记录成功!");
         }
 
-        [Command("well", Alias = new[] { "!算井" }, EventType = EventType.PM)]
-        public void Well(PrivateMessageEventArgs e, VikalaDbContext db)
+        [Command("well", Alias = new[] { "!算井" }, EventType = EventType.GM)]
+        public void Well(GroupMessageEventArgs e, VikalaDbContext db)
         {
             var info = db.DrawInfos.FirstOrDefault(i => i.QQ == e.Sender.Id);
             if (info == null)
